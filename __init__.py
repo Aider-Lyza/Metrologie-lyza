@@ -29,37 +29,6 @@ def mongraphique():
 @app.route('/')
 def hello_world():
     return render_template('hello.html') #(com
-@app.route("/commits-data/")
-def commits_data():
-    url = "https://api.github.com/repos/OpenRSI/5MCSI_Metriques/commits"
-
-    try:
-       
-        response = requests.get(url)
-        if response.status_code != 200:
-            return jsonify({"error": f"Erreur HTTP {response.status_code} depuis GitHub"}), response.status_code
-
-        
-        commits = response.json()
-
-       
-        minutes_count = {}
-        for commit in commits:
-            date_string = commit.get("commit", {}).get("author", {}).get("date", "")
-            if date_string:
-                date_object = datetime.strptime(date_string, "%Y-%m-%dT%H:%M:%SZ")
-                minute = date_object.minute
-                minutes_count[minute] = minutes_count.get(minute, 0) + 1
-
-
-        data = [{"minute": minute, "count": count} for minute, count in sorted(minutes_count.items())]
-        return jsonify(data)
-
-    except Exception as e:
-        return jsonify({"error": "Une erreur est survenue", "message": str(e)}), 500
-
-
-
 @app.route("/histogramme/")
 def histogramme():
     return render_template("histogramme.html")

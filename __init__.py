@@ -27,6 +27,9 @@ def mongraphique():
 @app.route('/')
 def hello_world():
     return render_template('hello.html') #(com
+@app.route("/histogramme/")
+def histogramme():
+    return render_template("histogramme.html")
   
 if __name__ == "__main__":
   app.run(debug=True)

@@ -58,9 +58,7 @@ def commits_data():
     except Exception as e:
         return jsonify({"error": "Une erreur est survenue", "message": str(e)}), 500
 
-@app.route("/commits/")
-def commits():
-    return render_template("commits.html")
+
 
 @app.route("/histogramme/")
 def histogramme():
